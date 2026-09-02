@@ -25,7 +25,7 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
       const next: Theme = prev === "dark" ? "light" : "dark";
       localStorage.setItem("rewaq-theme", next);
       document.documentElement.classList.toggle("dark", next === "dark");
-      document.documentElement.dataset.theme = next;
+      document.documentElement.dataset["theme"] = next;
       return next;
     });
   }, []);
