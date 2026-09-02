@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AboutRouteImport } from './routes/about'
+import { Route as ContactRouteImport } from './routes/contact'
 import { Route as MenuRouteImport } from './routes/menu'
 import { Route as MissionRouteImport } from './routes/mission'
 import { Route as VisionRouteImport } from './routes/vision'
@@ -23,6 +24,11 @@ const IndexRoute = IndexRouteImport.update({
 const AboutRoute = AboutRouteImport.update({
   id: '/about',
   path: '/about',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ContactRoute = ContactRouteImport.update({
+  id: '/contact',
+  path: '/contact',
   getParentRoute: () => rootRouteImport,
 } as any)
 const MenuRoute = MenuRouteImport.update({
@@ -44,6 +50,7 @@ const VisionRoute = VisionRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/contact': typeof ContactRoute
   '/menu': typeof MenuRoute
   '/mission': typeof MissionRoute
   '/vision': typeof VisionRoute
@@ -51,6 +58,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/contact': typeof ContactRoute
   '/menu': typeof MenuRoute
   '/mission': typeof MissionRoute
   '/vision': typeof VisionRoute
@@ -59,21 +67,24 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/contact': typeof ContactRoute
   '/menu': typeof MenuRoute
   '/mission': typeof MissionRoute
   '/vision': typeof VisionRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/about' | '/menu' | '/mission' | '/vision'
+  fullPaths: '/' | '/about' | '/contact' | '/menu' | '/mission' | '/vision'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/about' | '/menu' | '/mission' | '/vision'
-  id: '__root__' | '/' | '/about' | '/menu' | '/mission' | '/vision'
+  to: '/' | '/about' | '/contact' | '/menu' | '/mission' | '/vision'
+  id:
+    '__root__' | '/' | '/about' | '/contact' | '/menu' | '/mission' | '/vision'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutRoute: typeof AboutRoute
+  ContactRoute: typeof ContactRoute
   MenuRoute: typeof MenuRoute
   MissionRoute: typeof MissionRoute
   VisionRoute: typeof VisionRoute
@@ -93,6 +104,13 @@ declare module '@tanstack/react-router' {
       path: '/about'
       fullPath: '/about'
       preLoaderRoute: typeof AboutRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/contact': {
+      id: '/contact'
+      path: '/contact'
+      fullPath: '/contact'
+      preLoaderRoute: typeof ContactRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/menu': {
@@ -122,6 +140,7 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
+  ContactRoute: ContactRoute,
   MenuRoute: MenuRoute,
   MissionRoute: MissionRoute,
   VisionRoute: VisionRoute,
